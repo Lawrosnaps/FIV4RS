@@ -174,13 +174,17 @@ ContentPack
   phases[]        e.g. Build, Sharpen, Test week, Maintain
   sessions[]      id, title, purpose, phase, durationMin, shortVariantId?, blocks[]
   blocks[]        type: warmup | shuttle_intervals | shuttle_continuous | strength | mobility | cooldown
-                  params (per type: target level, reps, rest, distance mode, duration), coachNote
+                  params (per type: target level, reps, rest, distance mode, duration), coachNote, video?
   progression     rules the plan builder uses (§9)
-  tips[]          short coaching notes shown on Today, Progress and the shuttle setup screens
+  tips[]          short coaching notes and videos from Jon, shown on Today, Progress and the shuttle setup screens
+  media[]         id, kind: video, url, durationSec, poster, captions (videos stream and cache for offline)
 ```
 
 - The pack is a versioned JSON document validated against a schema (zod) both at build time and when loading.
 - A default pack ships inside the app, so the first launch and offline use always work. Newer published packs download from Supabase and are cached.
+### 7.1 Video (agreed 11 Oct)
+Video from Jon is a cornerstone of the app. Jon films his warm-up, cool-down and coaching tips (pacing, turns, nerves on the day), and Chris captures and edits them. Blocks and tips can carry a video, with written steps as the fallback when offline or muted. Videos are captioned and cached once watched.
+
 - Every content field that Jon owns is marked **[Jon to confirm]** in the default pack until he signs it off. The launch checklist fails while any remain.
 
 ---
@@ -197,7 +201,7 @@ ContentPack
 
 ### 8.2 Distances
 - **15m** is the true test.
-- **10m (short space)** keeps the **same running speed** per level, so each shuttle time is two thirds of the 15m time. Whether 10m is suitable at all, and how much the extra turns change the effort, is **[Jon to confirm]**. The app labels 10m runs clearly and the readiness meter weights them (§9.5).
+- **10m (short space)** keeps the **same running speed** per level, so each shuttle time is two thirds of the 15m time. Jon (11 Oct): "probably" fine, but 15m is the ideal and he wants to look into 10m further, so 10m stays **[Jon to confirm]**. The app always recommends 15m, offers 10m only as a short-space fallback, labels 10m runs clearly and the readiness meter weights them (§9.5).
 - The lane setup screen shows how to measure the lane (for example 15 m is about 20 average strides), and suggests cones or two markers and a flat, non-slip surface.
 
 ### 8.3 Timing
@@ -214,10 +218,11 @@ ContentPack
 
 A pure TypeScript module, `packages/core/plan`. The inputs are the test date (optional), today's date, the starting level, sessions per week and the content pack's progression rules. The output is a week-by-week list of session IDs. It is deterministic, so the same inputs always give the same plan.
 
-### 9.1 Dated plan (proposed defaults, **[Jon to confirm]**)
+### 9.1 Dated plan (confirmed by Jon, 11 Oct)
 - Count back whole weeks from the test date. The final week is **Test week**: lighter work, one confidence run to 5.4 three or four days before, and rest the day before.
 - The remaining weeks split roughly two thirds **Build** and one third **Sharpen**.
-- Target shuttle levels rise in small steps from the starting level towards 5.4 and beyond (for example 5.6 to 5.8 in Sharpen), so the test feels comfortable.
+- Target shuttle levels rise in small steps from the starting level towards 5.4 and beyond, peaking at **level 6** in Sharpen, so 5.4 feels comfortable. Jon aims his own clients at level 6 for the same reason, and it leaves officers close to PSU (6.3) if they go for it later.
+- Sessions per week: 2, 3 or 4, default 3. Sessions run 30 to 40 minutes, with a 15-minute short version after nights (confirmed).
 
 ### 9.2 Short runway
 If there are fewer than 3 weeks to the test, the app shows a compressed plan with an honest, kind note ("Short runway: we'll focus on familiarity and pacing"). It never shows scary copy.
@@ -227,7 +232,8 @@ If there are fewer than 3 weeks to the test, the app shows a compressed plan wit
 - **Not sure yet** gives a rolling Build programme. It progresses week to week from the latest best level and becomes a dated plan as soon as a date is entered, keeping the history.
 
 ### 9.4 Adapting
-- Sessions not done in a week simply roll off. The next week is based on what was actually done and the latest level, never "catch up".
+- Sessions not done in a week simply roll off and there is never any "catch up".
+- **Missed-session rule (Jon, 11 Oct):** one missed session changes nothing. A second missed session holds the officer on their current step, so they repeat it before progressing. The copy stays kind ("Let's lock this step in first"), with no red marks.
 - If the best level hasn't improved in about 3 weeks, the next week repeats the current step with a reassuring tip. The exact rule is **[Jon to confirm]**.
 
 ### 9.5 Readiness meter
@@ -246,9 +252,9 @@ There is one optional weekly nudge ("New week: 3 sessions ready") on the officer
 ## 10. Safety, privacy and trust
 
 ### 10.1 Health and safety
-- A readiness questionnaire runs before the first run. It is modelled on PAR-Q style questions, with the final wording **[Jon to confirm]**.
+- A readiness questionnaire runs before the first run. It uses **Jon's own health form** (he is sending it); until it arrives the PAR-Q style draft stands, marked **[Jon to confirm]**. Any "yes" advises checking with a GP or OH first.
 - A persistent health disclaimer says FIV4RS is not medical advice.
-- Warm-up blocks are included by default.
+- Warm-up and cool-down blocks are included by default, using **Jon's own routines as videos** (§7.1).
 - The runner shows "Stop if you feel chest pain, dizziness or unwell" before each run.
 - **Pause my plan** (for injury, illness or leave) freezes the plan without losing progress.
 
@@ -328,6 +334,9 @@ Every table has RLS. There are SQL tests proving that an officer cannot read ano
 | Item | Owner |
 |---|---|
 | All training defaults in this spec, consolidated in `docs/jon/questions-for-jon.md` | Jon |
+| Jon's health form, warm-up and cool-down videos, and coaching tip videos (Chris films and edits) | Jon / Chris |
+| Enforcer Fitness email address for coaching requests | Jon |
+| Whether 10m practice is suitable | Jon |
 | Missed-bleep warning rules and specialist role levels (verify against College of Policing) | Jon / Chris |
 | Data controller identity and privacy notice | Chris |
 | Referral share terms with Jon | Chris and Jon |

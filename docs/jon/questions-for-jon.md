@@ -59,3 +59,22 @@ We've drafted sensible defaults for everything training-related, but **none of i
 ---
 
 Thanks, Jon. Once these are back, we'll load them into the app as the "Powered by Enforcer Fitness" programme, and you'll see it in a test build before anything goes live.
+
+---
+
+## Jon's answers (WhatsApp, 11 Oct 2026)
+
+| Topic | Jon's answer | What we do |
+|---|---|---|
+| Logo wording | "Whichever you prefer" | Chris picks |
+| Sessions per week (2, 3 or 4, default 3) | Yes | Confirmed |
+| 30 to 40 min, 15-min version after nights | Yes | Confirmed |
+| 10m practice | "Probably, but need to look into it. Ideally 15m" | 15m recommended; 10m stays a labelled fallback, still to confirm |
+| Practice target | Aims his clients at level 6; PSU is only a little further | Sharpen peaks at level 6 |
+| Confidence run to 5.4 a few days before, rest the day before | Yes | Confirmed |
+| Missed sessions | One is fine; on a second miss they stay on the step before progressing | Rule added to plan builder |
+| Health form | Will send his own | Waiting |
+| Warm-up and cool-down | Has them, offered to video them | Video, Chris films and edits |
+| Everfit workout PDFs | Yes | Waiting |
+| Coaching request email | The Enforcer Fitness one | Need the address |
+| Tips | Videos rather than voice notes | Video, Chris films and edits |
